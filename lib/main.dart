@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+
+import 'Screen/Data.dart';
 
 void main() => runApp(MyApp());
 
@@ -111,6 +114,22 @@ class _MyAppState extends State<MyApp> {
     print('Status code: ${response.statusCode}');
     print('Headers: ${response.headers}');
     print('Body: ${response.body}');
+
+
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+
+      // Access the data from the response
+      final buildingName = jsonResponse['buildingName'];
+      final floorLevel = jsonResponse['floorLevel'];
+      final imageURL = jsonResponse['floorplan']['imageURL'];
+
+      // Or convert the response to a custom class
+      final data = Data.fromJson(jsonResponse);
+      print("-Response Code Here "+data.buildingID.toString());
+    } else {
+      throw Exception('Failed to load data');
+    }
   }
 }
 
