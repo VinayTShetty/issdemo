@@ -79,14 +79,24 @@ class _MyAppState extends State<MyApp> {
                       direction: Axis.vertical,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        ElevatedButton(
-                            onPressed: () => scanBarcodeNormal(),
-                            child: const Text('Barcode scan')),
-                        // Text('Scan result : $_scanBarcode\n',
-                        //     style: const TextStyle(fontSize: 20),
-                        //
-                        //
-                        // )
+                        // ElevatedButton(
+                        //     onPressed: () => scanBarcodeNormal(),
+                        //     child: const Text('Barcode scan')),
+                        GestureDetector(
+                          onTap: () {
+                            // add your logic here for when the image is clicked
+                            scanBarcodeNormal();
+                          },
+                          child: Image.asset(
+                            'assets/screensaverimage.png',
+                            width: 100,
+                            height: 100,
+                          ),
+                        ),
+                        Text('Scan QR Code',
+                            style: const TextStyle(fontSize: 30,color: Color(
+                                0xFF090404)),
+                        )
                       ]));
             })));
   }
