@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 void main() => runApp(MyApp());
 
@@ -46,6 +48,8 @@ class _MyAppState extends State<MyApp> {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.BARCODE);
       print(barcodeScanRes);
+    //  fetchAlbum(barcodeScanRes);
+      makeGetRequest();
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
     }
@@ -72,17 +76,25 @@ class _MyAppState extends State<MyApp> {
                         ElevatedButton(
                             onPressed: () => scanBarcodeNormal(),
                             child: const Text('Barcode scan')),
-                        ElevatedButton(
-                            onPressed: () => scanQR(),
-                            child: const Text('QR scan')),
-                        ElevatedButton(
-                            onPressed: () => startBarcodeScanStream(),
-                            child: const Text('Barcode scan stream')),
                         Text('Scan result : $_scanBarcode\n',
-                            style: const TextStyle(fontSize: 20))
+                            style: const TextStyle(fontSize: 20),
+
+
+                        )
                       ]));
             })));
   }
+
+  Future<http.Response> fetchAlbum(String uniqueId) {
+    return http.get(Uri.parse('https://exercicefsa.azurewebsites.net/api/QR/'+uniqueId));
+  }
+
+  Future<void> makeGetRequest() async {
+    final url = Uri.parse('https://exercicefsa.azurewebsites.net/api/QR/09033927-6a9a-4773-bd89-295c6bfac034');
+    Response response = await get(url);
+    print('Status code: ${response.statusCode}');
+    print('Headers: ${response.headers}');
+    print('Body: ${response.body}');
+  }
 }
 
-//barcode scanner flutter ant
