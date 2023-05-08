@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:iss/Screen/maps.dart';
 
 import 'Screen/Data.dart';
 
@@ -18,6 +19,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _scanBarcode = 'Unknown';
+  late BuildContext mycontext;
 
   @override
   void initState() {
@@ -52,7 +54,7 @@ class _MyAppState extends State<MyApp> {
           '#ff6666', 'Cancel', true, ScanMode.BARCODE);
       print(barcodeScanRes);
     //  fetchAlbum(barcodeScanRes);
-      makeGetRequest(barcodeScanRes);
+      makeGetRequest(barcodeScanRes,mycontext);
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
     }
@@ -70,6 +72,7 @@ class _MyAppState extends State<MyApp> {
         home: Scaffold(
             appBar: AppBar(title: const Text('Barcode Scanner')),
             body: Builder(builder: (BuildContext context) {
+              mycontext=context;
               return Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
@@ -108,7 +111,7 @@ class _MyAppState extends State<MyApp> {
     return http.get(Uri.parse('https://exercicefsa.azurewebsites.net/api/QR/'+uniqueId));
   }
 
-  Future<void> makeGetRequest(String qrcode) async {
+  Future<void> makeGetRequest(String qrcode,BuildContext scaffoldContext) async {
     final url = Uri.parse('https://exercicefsa.azurewebsites.net/api/QR/'+qrcode);
     Response response = await get(url);
     print('Status code: ${response.statusCode}');
@@ -127,6 +130,10 @@ class _MyAppState extends State<MyApp> {
       // Or convert the response to a custom class
       final data = Data.fromJson(jsonResponse);
       print("-Response Code Here "+data.buildingID.toString());
+      Navigator.push(
+        scaffoldContext,
+        MaterialPageRoute(builder: (context) => const Maps()),
+      );
     } else {
       throw Exception('Failed to load data');
     }
