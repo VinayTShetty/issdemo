@@ -68,6 +68,12 @@ class _MyAppState extends State<MyApp> {
             appBar: AppBar(title: const Text('Barcode Scanner')),
             body: Builder(builder: (BuildContext context) {
               return Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/background.jpg'),
+                    fit: BoxFit.fill,
+                  ),
+                ),
                   alignment: Alignment.center,
                   child: Flex(
                       direction: Axis.vertical,
@@ -76,11 +82,11 @@ class _MyAppState extends State<MyApp> {
                         ElevatedButton(
                             onPressed: () => scanBarcodeNormal(),
                             child: const Text('Barcode scan')),
-                        Text('Scan result : $_scanBarcode\n',
-                            style: const TextStyle(fontSize: 20),
-
-
-                        )
+                        // Text('Scan result : $_scanBarcode\n',
+                        //     style: const TextStyle(fontSize: 20),
+                        //
+                        //
+                        // )
                       ]));
             })));
   }
