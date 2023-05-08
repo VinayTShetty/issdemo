@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:iss/Screen/maps.dart';
@@ -130,9 +131,10 @@ class _MyAppState extends State<MyApp> {
       // Or convert the response to a custom class
       final data = Data.fromJson(jsonResponse);
       print("-Response Code Here "+data.buildingID.toString());
+      LatLng location =  LatLng(12.918427462285367, 77.50269032423634);
       Navigator.push(
         scaffoldContext,
-        MaterialPageRoute(builder: (context) => const Maps()),
+        MaterialPageRoute(builder: (context) => Maps(location: location,name:"",email:"")),
       );
     } else {
       throw Exception('Failed to load data');
