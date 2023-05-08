@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
           '#ff6666', 'Cancel', true, ScanMode.BARCODE);
       print(barcodeScanRes);
     //  fetchAlbum(barcodeScanRes);
-      makeGetRequest();
+      makeGetRequest(barcodeScanRes);
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
     }
@@ -89,8 +89,8 @@ class _MyAppState extends State<MyApp> {
     return http.get(Uri.parse('https://exercicefsa.azurewebsites.net/api/QR/'+uniqueId));
   }
 
-  Future<void> makeGetRequest() async {
-    final url = Uri.parse('https://exercicefsa.azurewebsites.net/api/QR/09033927-6a9a-4773-bd89-295c6bfac034');
+  Future<void> makeGetRequest(String qrcode) async {
+    final url = Uri.parse('https://exercicefsa.azurewebsites.net/api/QR/'+qrcode);
     Response response = await get(url);
     print('Status code: ${response.statusCode}');
     print('Headers: ${response.headers}');
