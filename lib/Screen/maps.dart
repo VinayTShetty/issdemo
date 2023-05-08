@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:iss/Screen/Data.dart';
 
 class Maps extends StatelessWidget {
-  final LatLng location;
-  final String name;
-  final String email;
+  final Data mydemoData;
   late GoogleMapController mapController;
 
   Maps({
-    required this.location,
-    required this.name,
-    required this.email,
+    required this.mydemoData,
   });
 
   @override
@@ -23,16 +20,16 @@ class Maps extends StatelessWidget {
         onMapCreated: _onMapCreated,
         mapType: MapType.satellite,
         initialCameraPosition: CameraPosition(
-          target: location,
+          target: LatLng(mydemoData.userLocation.lat,mydemoData.userLocation.long),
           zoom: 20,
         ),
         markers: {
           Marker(
             markerId: const MarkerId('marker2'),
-            position: location,
+            position: LatLng(mydemoData.userLocation.lat,mydemoData.userLocation.long),
             infoWindow: InfoWindow(
-              title: name,
-              snippet: email,
+              title: mydemoData.buildingName,
+              snippet: mydemoData.floorName,
             ),
           ),
         },

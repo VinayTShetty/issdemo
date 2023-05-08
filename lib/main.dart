@@ -134,7 +134,7 @@ class _MyAppState extends State<MyApp> {
       LatLng location =  LatLng(12.918427462285367, 77.50269032423634);
       Navigator.push(
         scaffoldContext,
-        MaterialPageRoute(builder: (context) => Maps(location: location,name:"",email:"")),
+        MaterialPageRoute(builder: (context) => Maps(mydemoData:data)),
       );
     } else {
       throw Exception('Failed to load data');
