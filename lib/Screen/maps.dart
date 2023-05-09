@@ -165,6 +165,7 @@ class Maps extends StatelessWidget {
     ).then((confirmed) {
       if (confirmed != null && confirmed) {
         // The user confirmed, do something here
+        makePostRequest();
       } else {
         // The user canceled or dismissed the dialog
       }
