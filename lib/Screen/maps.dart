@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iss/Screen/Data.dart';
 import 'package:iss/Screen/InstallationData.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Maps extends StatelessWidget {
   final Data mydemoData;
@@ -102,8 +104,10 @@ class Maps extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
+                      makePostRequest();
                     },
-                    child: Text('Make Installation'),
+                    child:
+                    Text('Make Installation'),
                   ),
                 ],
               ),
@@ -112,6 +116,48 @@ class Maps extends StatelessWidget {
         );
       },
     );
+  }
+
+  // Future<void> makePostRequest() async {
+  //   try {
+  //     final url = Uri.parse('https://exercicefsa.azurewebsites.net/api/Installation/42');
+  //     final response = await http.post(
+  //       url,
+  //       body: {
+  //           "newConfrimedInstallations": 1
+  //       },
+  //     );
+  //
+  //     if (response.statusCode == 200) {
+  //       print('Installation Response= '+response.body.toString());
+  //     } else {
+  //       print('Request failed with status: ${response.statusCode}.');
+  //     }
+  //   } catch (e) {
+  //     print('Error occurred: $e');
+  //   }
+  // }
+
+  Future<void> makePostRequest() async {
+    final url = Uri.parse('https://exercicefsa.azurewebsites.net/api/Installation/42');
+    final headers = <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
+    final body = jsonEncode(<String, dynamic>{
+      'newConfrimedInstallations': 1,
+    });
+
+    try {
+      final response = await http.post(url, headers: headers, body: body);
+      if (response.statusCode == 200) {
+        print('POST request successful');
+        print(response.body);
+      } else {
+        print('Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 
 }
