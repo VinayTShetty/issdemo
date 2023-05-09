@@ -65,8 +65,8 @@ class Maps extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(installationData.floodID.toString()),
-          content: Text(installationData.done.toString()+""+installationData.pending.toString()),
+          title: Text("Floor ID= "+installationData.floodID.toString()),
+          content: Text("Done= "+installationData.done.toString()+"\n"+"Pending= "+installationData.pending.toString()),
           actions: [
             TextButton(
               onPressed: () {
