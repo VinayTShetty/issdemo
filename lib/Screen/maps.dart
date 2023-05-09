@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iss/Screen/Data.dart';
+import 'package:iss/Screen/InstallationData.dart';
 
 class Maps extends StatelessWidget {
   final Data mydemoData;
+  final InstallationData installationData;
   late GoogleMapController mapController;
 
   Maps({
     required this.mydemoData,
+    required this.installationData,
   });
 
   @override
@@ -43,7 +46,7 @@ class Maps extends StatelessWidget {
               child: FloatingActionButton(
                 onPressed: () {
                   // Do something when the button is pressed
-                  _showMyDialog(context);
+                  _showMyDialog(context,installationData);
                 },
                 child: Icon(Icons.my_location),
               ),
@@ -57,13 +60,13 @@ class Maps extends StatelessWidget {
     mapController = controller;
     mapController.showMarkerInfoWindow(const MarkerId('marker2'));
   }
-  void _showMyDialog(BuildContext context) {
+  void _showMyDialog(BuildContext context,InstallationData installationData) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Custom Dialog Title'),
-          content: Text('Custom Dialog Content'),
+          title: Text(installationData.floodID.toString()),
+          content: Text(installationData.done.toString()+""+installationData.pending.toString()),
           actions: [
             TextButton(
               onPressed: () {

@@ -7,6 +7,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:iss/Screen/InstallationData.dart';
 import 'package:iss/Screen/maps.dart';
 
 import 'Screen/Data.dart';
@@ -114,10 +115,21 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> makeGetRequest(String qrcode,BuildContext scaffoldContext) async {
     final url = Uri.parse('https://exercicefsa.azurewebsites.net/api/QR/'+qrcode);
+    final installationDetails = Uri.parse('https://exercicefsa.azurewebsites.net/api/Installation/42');
+
     Response response = await get(url);
+    Response installationResponse = await get(installationDetails);
     print('Status code: ${response.statusCode}');
     print('Headers: ${response.headers}');
-    print('Body: ${response.body}');
+    print('Response QR Code ${response.body}');
+
+    if (installationResponse.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      final installData = InstallationData.fromJson(jsonResponse);
+    }else {
+      throw Exception('Failed to load data');
+    }
+
 
 
     if (response.statusCode == 200) {
@@ -130,11 +142,13 @@ class _MyAppState extends State<MyApp> {
 
       // Or convert the response to a custom class
       final data = Data.fromJson(jsonResponse);
-      print("-Response Code Here "+data.buildingID.toString());
+    //  print("-Response Code Here "+data.buildingID.toString());
+      InstallationData installData = InstallationData.fromJson(jsonDecode(installationResponse.body));
+      print('Response Installation  ${installationResponse.body}');
       LatLng location =  LatLng(12.918427462285367, 77.50269032423634);
       Navigator.push(
         scaffoldContext,
-        MaterialPageRoute(builder: (context) => Maps(mydemoData:data)),
+        MaterialPageRoute(builder: (context) => Maps(mydemoData:data,installationData:installData)),
       );
     } else {
       throw Exception('Failed to load data');
