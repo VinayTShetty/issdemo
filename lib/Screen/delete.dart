@@ -44,7 +44,7 @@ class Maps extends StatelessWidget {
             right: 16.0,
             child: FloatingActionButton(
               onPressed: () {
-                _showBottomSheet(context, installationData,mydemoData);
+                _showBottomSheet(context, installationData);
               },
               child: Icon(Icons.my_location),
             ),
@@ -59,7 +59,7 @@ class Maps extends StatelessWidget {
     mapController.showMarkerInfoWindow(const MarkerId('marker2'));
   }
 
-  void _showBottomSheet(BuildContext context, InstallationData installationData,Data mydemoData) {
+  void _showBottomSheet(BuildContext context, InstallationData installationData) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -72,9 +72,7 @@ class Maps extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
                 child: Text(
-                  'Building ID=  ' + mydemoData.buildingID.toString()+"\n"
-                  'Floor Name= '+mydemoData.floorName.toString()+"\n"
-                  'Floor Level= '+mydemoData.floorLevel.toString(),
+                  'Floor ID= ' + installationData.floodID.toString(),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18.0,
@@ -84,10 +82,10 @@ class Maps extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
                 child: Text(
-                  'Done Installation = ' +
+                  'Done= ' +
                       installationData.done.toString() +
                       '\n' +
-                      'Pending Installation ' +
+                      'Pending= ' +
                       installationData.pending.toString(),
                   style: TextStyle(
                     fontSize: 16.0,
