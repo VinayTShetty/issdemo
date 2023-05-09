@@ -104,7 +104,7 @@ class Maps extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
-                      makePostRequest();
+                      _showConfirmationDialog(context);
                     },
                     child:
                     Text('Make Installation'),
@@ -117,27 +117,6 @@ class Maps extends StatelessWidget {
       },
     );
   }
-
-  // Future<void> makePostRequest() async {
-  //   try {
-  //     final url = Uri.parse('https://exercicefsa.azurewebsites.net/api/Installation/42');
-  //     final response = await http.post(
-  //       url,
-  //       body: {
-  //           "newConfrimedInstallations": 1
-  //       },
-  //     );
-  //
-  //     if (response.statusCode == 200) {
-  //       print('Installation Response= '+response.body.toString());
-  //     } else {
-  //       print('Request failed with status: ${response.statusCode}.');
-  //     }
-  //   } catch (e) {
-  //     print('Error occurred: $e');
-  //   }
-  // }
-
   Future<void> makePostRequest() async {
     final url = Uri.parse('https://exercicefsa.azurewebsites.net/api/Installation/42');
     final headers = <String, String>{
@@ -159,5 +138,38 @@ class Maps extends StatelessWidget {
       print('Error: $e');
     }
   }
+
+  void _showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Do you want to Install'),
+          content: Text('Are you sure?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+              child: Text('Yes'),
+            ),
+          ],
+        );
+      },
+    ).then((confirmed) {
+      if (confirmed != null && confirmed) {
+        // The user confirmed, do something here
+      } else {
+        // The user canceled or dismissed the dialog
+      }
+    });
+  }
+
 
 }
