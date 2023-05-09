@@ -16,23 +16,38 @@ class Maps extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Data Page'),
       ),
-      body: GoogleMap(
-        onMapCreated: _onMapCreated,
-        mapType: MapType.satellite,
-        initialCameraPosition: CameraPosition(
-          target: LatLng(mydemoData.userLocation.lat,mydemoData.userLocation.long),
-          zoom: 20,
-        ),
-        markers: {
-          Marker(
-            markerId: const MarkerId('marker2'),
-            position: LatLng(mydemoData.userLocation.lat,mydemoData.userLocation.long),
-            infoWindow: InfoWindow(
-              title: mydemoData.buildingName,
-              snippet: mydemoData.floorName,
+      body: Stack(
+          children: [
+            GoogleMap(
+              onMapCreated: _onMapCreated,
+              mapType: MapType.satellite,
+              initialCameraPosition: CameraPosition(
+                target: LatLng(mydemoData.userLocation.lat,mydemoData.userLocation.long),
+                zoom: 20,
+              ),
+              markers: {
+                Marker(
+                  markerId: const MarkerId('marker2'),
+                  position: LatLng(mydemoData.userLocation.lat,mydemoData.userLocation.long),
+                  infoWindow: InfoWindow(
+                    title: mydemoData.buildingName,
+                    snippet: mydemoData.floorName,
+                  ),
+                ),
+              },
+
             ),
-          ),
-        },
+            Positioned(
+              bottom: 16.0,
+              right: 16.0,
+              child: FloatingActionButton(
+                onPressed: () {
+                  // Do something when the button is pressed
+                },
+                child: Icon(Icons.my_location),
+              ),
+            )
+          ]
       ),
     );
   }
