@@ -9,11 +9,16 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:iss/Screen/InstallationData.dart';
 import 'package:iss/Screen/maps.dart';
-
 import 'Screen/Data.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() => runApp(MyApp());
-
+// var supportedLocales = [
+//   const Locale('en', ''), // English
+//   const Locale('es', ''), // Spanish
+//   const Locale('fr', ''), // French
+// ];
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
@@ -69,10 +74,14 @@ class _MyAppState extends State<MyApp> {
 //barcode scanner flutter ant
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-            appBar: AppBar(title: const Text('Barcode Scanner')),
+            appBar: AppBar(title: const Text('ISS App')),
+
             body: Builder(builder: (BuildContext context) {
               mycontext=context;
               return Container(
@@ -101,7 +110,7 @@ class _MyAppState extends State<MyApp> {
                             height: 100,
                           ),
                         ),
-                        Text('Scan QR Code',
+                        Text(AppLocalizations.of(context)!.scanqrcode,
                             style: const TextStyle(fontSize: 30,color: Color(
                                 0xFF090404)),
                         )
@@ -129,9 +138,6 @@ class _MyAppState extends State<MyApp> {
     }else {
       throw Exception('Failed to load data');
     }
-
-
-
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
 
