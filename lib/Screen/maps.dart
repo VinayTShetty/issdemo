@@ -171,6 +171,47 @@ class Maps extends StatelessWidget {
       }
     });
   }
+}
 
+class ModalBottomSheet extends StatefulWidget {
+  _ModalBottomSheetState createState() => _ModalBottomSheetState();
+}
 
+class _ModalBottomSheetState extends State<ModalBottomSheet>
+    with SingleTickerProviderStateMixin {
+  var heightOfModalBottomSheet = 100.0;
+
+  Widget build(BuildContext context) {
+    return Container(
+      height: heightOfModalBottomSheet,
+      child: ElevatedButton(
+          child: Text("Press"),
+          onPressed: () {
+            heightOfModalBottomSheet += 100;
+            setState(() {});
+          }),
+    );
+  }
+}
+class MyHomePage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return new _MyHomePageState();
+  }
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
+    Future(() => showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return ModalBottomSheet();
+        }));
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text("Modal example"),
+      ),
+    );
+  }
 }
