@@ -43,6 +43,7 @@ class Maps extends StatelessWidget {
               child: FloatingActionButton(
                 onPressed: () {
                   // Do something when the button is pressed
+                  _showMyDialog(context);
                 },
                 child: Icon(Icons.my_location),
               ),
@@ -55,5 +56,24 @@ class Maps extends StatelessWidget {
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
     mapController.showMarkerInfoWindow(const MarkerId('marker2'));
+  }
+  void _showMyDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Custom Dialog Title'),
+          content: Text('Custom Dialog Content'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
