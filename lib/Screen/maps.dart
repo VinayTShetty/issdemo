@@ -130,7 +130,8 @@ class Maps extends StatelessWidget {
       final response = await http.post(url, headers: headers, body: body);
       if (response.statusCode == 200) {
         print('POST request successful');
-        print(response.body);
+        InstallationData installData = InstallationData.fromJson(jsonDecode(response.body));
+        print("ISS API Response Body Floor ID POST = "+response.body.toString());
       } else {
         print('Error: ${response.statusCode}');
       }
@@ -170,48 +171,5 @@ class Maps extends StatelessWidget {
         // The user canceled or dismissed the dialog
       }
     });
-  }
-}
-
-class ModalBottomSheet extends StatefulWidget {
-  _ModalBottomSheetState createState() => _ModalBottomSheetState();
-}
-
-class _ModalBottomSheetState extends State<ModalBottomSheet>
-    with SingleTickerProviderStateMixin {
-  var heightOfModalBottomSheet = 100.0;
-
-  Widget build(BuildContext context) {
-    return Container(
-      height: heightOfModalBottomSheet,
-      child: ElevatedButton(
-          child: Text("Press"),
-          onPressed: () {
-            heightOfModalBottomSheet += 100;
-            setState(() {});
-          }),
-    );
-  }
-}
-class MyHomePage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return new _MyHomePageState();
-  }
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    Future(() => showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return ModalBottomSheet();
-        }));
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Modal example"),
-      ),
-    );
   }
 }

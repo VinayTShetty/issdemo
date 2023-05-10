@@ -148,7 +148,8 @@ class _MyAppState extends State<MyApp> {
 
       // Or convert the response to a custom class
       final data = Data.fromJson(jsonResponse);
-    //  print("-Response Code Here "+data.buildingID.toString());
+     print("ISS API Response Body QR Scan GET = "+response.body.toString());
+     print("ISS API Response Body Floor ID GET = "+installationResponse.body.toString());
       InstallationData installData = InstallationData.fromJson(jsonDecode(installationResponse.body));
       print('Response Installation  ${installationResponse.body}');
       LatLng location =  LatLng(12.918427462285367, 77.50269032423634);
